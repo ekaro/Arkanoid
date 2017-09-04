@@ -9,6 +9,7 @@ public:
 	RectF(const Vec2& topLeft, const Vec2& topRight);
 	RectF(const Vec2& topLeft, float width, float height);
 	bool IsOverlapping(const RectF& other) const;
+	static RectF FromCenter(const Vec2& center, float halfWidth, float halfHeight); //static function
 public:
 	float left;
 	float right;

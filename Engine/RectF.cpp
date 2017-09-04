@@ -9,9 +9,9 @@ RectF::RectF(float left_in, float right_in, float top_in, float bottom_in)
 {
 }
 
-RectF::RectF(const Vec2& topLeft, const Vec2& topRight)
+RectF::RectF(const Vec2& topLeft, const Vec2& bottomRight)
 	:
-	RectF(topLeft.x, topLeft.y, topRight.x, topRight.y)
+	RectF(topLeft.x, bottomRight.x, topLeft.y, bottomRight.y)
 {
 }
 

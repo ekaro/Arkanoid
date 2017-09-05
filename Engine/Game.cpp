@@ -30,7 +30,7 @@ Game::Game( MainWindow& wnd )
 	pad(Vec2(400.0f,500.0f), 50.0f, 15.0f)
 {
 	const Color colors[4] = { Colors::Red, Colors::Green, Colors::Blue, Colors::Cyan };
-	const Vec2 topLeft(0.0f, 0.0f);
+	const Vec2 topLeft(40.0f, 40.0f);
 
 	int i = 0;
 	for (int y = 0; y < nBricksDown; y++)

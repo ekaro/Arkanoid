@@ -26,6 +26,7 @@
 #include "FrameTimer.h"
 #include "Ball.h"
 #include "Brick.h"
+#include "Paddle.h"
 
 class Game
 {
@@ -49,5 +50,6 @@ private:
 	Ball ball;
 	Brick brick;
 	RectF walls;
+	Paddle pad;
 	/********************************/
 };

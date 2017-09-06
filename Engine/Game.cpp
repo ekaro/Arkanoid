@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(300.0f, 300.0f), Vec2(300.0f, 300.0f)),
+	ball(Vec2(300.0f + 24.0f, 300.0f), Vec2(-300.0f, -300.0f)),
 	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight)),
 	pad(Vec2(400.0f,500.0f), 50.0f, 15.0f)
 {
@@ -58,15 +58,39 @@ void Game::UpdateModel()
 
 	pad.Update(wnd.kbd, dt);
 	pad.WallCollision(walls);
-
 	ball.Update(dt);
-	for (Brick& b : bricks)
+
+	bool CollisionHappened = false;
+	float curColDistSq;
+	int curColIndex;
+
+	for ( int i = 0; i < nBricks; i++)
 	{
-		if (b.BallCollision(ball))
+		if (bricks[i].CheckBallCollision(ball))
 		{
-			break;
+			const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
+			if (CollisionHappened)
+			{
+				if (newColDistSq < curColDistSq)
+				{
+					curColDistSq = newColDistSq;
+					curColIndex = i;
+				}
+			}
+			else
+			{
+				curColDistSq = newColDistSq;
+				curColIndex = i;
+				CollisionHappened = true;
+			}
 		}
 	}
+
+	if (CollisionHappened)
+	{
+		bricks[curColIndex].ExecuteBallCollision(ball);
+	}
+
 	pad.BallCollision(ball);
 	ball.WallCollision(walls);
 }

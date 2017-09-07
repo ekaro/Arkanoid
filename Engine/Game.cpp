@@ -88,11 +88,16 @@ void Game::UpdateModel()
 
 	if (CollisionHappened)
 	{
+		pad.ResetCoolodown();
 		bricks[curColIndex].ExecuteBallCollision(ball);
 	}
 
 	pad.BallCollision(ball);
-	ball.WallCollision(walls);
+
+	if (ball.WallCollision(walls))
+	{
+		pad.ResetCoolodown();
+	}
 }
 
 void Game::ComposeFrame()

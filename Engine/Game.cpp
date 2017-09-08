@@ -98,18 +98,27 @@ void Game::UpdateModel(float dt)
 
 	pad.BallCollision(ball);
 
-	if (ball.WallCollision(walls))
+	int WallCollisionResult = ball.WallCollision(walls);
+	if (WallCollisionResult == 1)
 	{
 		pad.ResetCoolodown();
+	}
+	else if (WallCollisionResult == 2)
+	{
+		GameOver = true;
 	}
 }
 
 void Game::ComposeFrame()
 {
-	ball.Draw(gfx);
+	if (!GameOver)
+	{
+		ball.Draw(gfx);
+		pad.Draw(gfx);
+	}
+	
 	for (const Brick& b : bricks)
 	{
 		b.Draw(gfx);
 	}
-	pad.Draw(gfx);
 }

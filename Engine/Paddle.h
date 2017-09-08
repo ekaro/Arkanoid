@@ -22,6 +22,7 @@ private:
 	Color color = Colors::White;
 	float speed = 300.0f;
 	float Factor = 0.045f;
+	float fixedZoneHalfWidth = 15.0f;
 	float halfWidth;
 	float halfHeight;
 	Vec2 pos;

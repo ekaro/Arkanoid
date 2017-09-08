@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(300.0f + 24.0f, 300.0f), Vec2(-300.0f, -300.0f)),
+	ball(Vec2(300.0f + 24.0f, 300.0f), Vec2(-1.0f, -1.0f)),
 	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight)),
 	pad(Vec2(400.0f,500.0f), 50.0f, 15.0f)
 {

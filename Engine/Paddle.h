@@ -21,6 +21,7 @@ private:
 	Color wingColor = Colors::Red;
 	Color color = Colors::White;
 	float speed = 300.0f;
+	float Factor = 0.045f;
 	float halfWidth;
 	float halfHeight;
 	Vec2 pos;

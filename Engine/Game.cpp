@@ -54,37 +54,41 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	const float dt = ft.Mark();
-
-	pad.Update(wnd.kbd, dt);
-	pad.WallCollision(walls);
-	ball.Update(dt);
-
-	bool CollisionHappened = false;
-	float curColDistSq;
-	int curColIndex;
-
-	for ( int i = 0; i < nBricks; i++)
+	if (!GameOver)
 	{
-		if (bricks[i].CheckBallCollision(ball))
+	    const float dt = ft.Mark();
+
+		pad.Update(wnd.kbd, dt);
+		pad.WallCollision(walls);
+		ball.Update(dt);
+
+		bool CollisionHappened = false;
+		float curColDistSq;
+		int curColIndex;
+
+		for ( int i = 0; i < nBricks; i++)
 		{
-			const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
-			if (CollisionHappened)
+			if (bricks[i].CheckBallCollision(ball))
 			{
-				if (newColDistSq < curColDistSq)
+				const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
+				if (CollisionHappened)
+				{
+					if (newColDistSq < curColDistSq)
+					{
+						curColDistSq = newColDistSq;
+						curColIndex = i;
+					}
+				}
+				else
 				{
 					curColDistSq = newColDistSq;
 					curColIndex = i;
+					CollisionHappened = true;
 				}
-			}
-			else
-			{
-				curColDistSq = newColDistSq;
-				curColIndex = i;
-				CollisionHappened = true;
 			}
 		}
 	}
+	
 
 	if (CollisionHappened)
 	{
@@ -93,6 +97,11 @@ void Game::UpdateModel()
 
 	pad.BallCollision(ball);
 	ball.WallCollision(walls);
+	const int WallCollisionResult = ball.WallCollision(walls);
+	if (WallCollisionResult == 1)
+	{
+
+	}
 }
 
 void Game::ComposeFrame()

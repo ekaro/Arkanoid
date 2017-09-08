@@ -56,5 +56,6 @@ private:
 	Brick bricks[nBricks];
 	RectF walls;
 	Paddle pad;
+	bool GameOver = false;
 	/********************************/
 };

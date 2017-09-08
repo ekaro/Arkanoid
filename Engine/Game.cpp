@@ -60,52 +60,55 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
-	pad.Update(wnd.kbd, dt);
-	pad.WallCollision(walls);
-	ball.Update(dt);
-
-	bool CollisionHappened = false;
-	float curColDistSq;
-	int curColIndex;
-
-	for ( int i = 0; i < nBricks; i++)
+	if (!GameOver)
 	{
-		if (bricks[i].CheckBallCollision(ball))
+		pad.Update(wnd.kbd, dt);
+		pad.WallCollision(walls);
+		ball.Update(dt);
+
+		bool CollisionHappened = false;
+		float curColDistSq;
+		int curColIndex;
+
+		for ( int i = 0; i < nBricks; i++)
 		{
-			const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
-			if (CollisionHappened)
+			if (bricks[i].CheckBallCollision(ball))
 			{
-				if (newColDistSq < curColDistSq)
+				const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
+				if (CollisionHappened)
+				{
+					if (newColDistSq < curColDistSq)
+					{
+						curColDistSq = newColDistSq;
+						curColIndex = i;
+					}
+				}
+				else
 				{
 					curColDistSq = newColDistSq;
 					curColIndex = i;
+					CollisionHappened = true;
 				}
 			}
-			else
-			{
-				curColDistSq = newColDistSq;
-				curColIndex = i;
-				CollisionHappened = true;
-			}
 		}
-	}
 
-	if (CollisionHappened)
-	{
-		pad.ResetCoolodown();
-		bricks[curColIndex].ExecuteBallCollision(ball);
-	}
+		if (CollisionHappened)
+		{
+			pad.ResetCoolodown();
+			bricks[curColIndex].ExecuteBallCollision(ball);
+		}
 
-	pad.BallCollision(ball);
+		pad.BallCollision(ball);
 
-	int WallCollisionResult = ball.WallCollision(walls);
-	if (WallCollisionResult == 1)
-	{
-		pad.ResetCoolodown();
-	}
-	else if (WallCollisionResult == 2)
-	{
-		GameOver = true;
+		int WallCollisionResult = ball.WallCollision(walls);
+		if (WallCollisionResult == 1)
+		{
+			pad.ResetCoolodown();
+		}
+		else if (WallCollisionResult == 2)
+		{
+			GameOver = true;
+		}
 	}
 }
 

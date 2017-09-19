@@ -42,3 +42,9 @@ Vec2 RectF::GetCenter() const
 {
 	return Vec2((left+right)/2.0f, (top+bottom)/2.0f);
 }
+
+bool RectF::IsContainedBy(const RectF& other) const
+{
+	return left >= other.left && right <= other.right &&
+		top >= other.top && bottom <= other.bottom;
+}

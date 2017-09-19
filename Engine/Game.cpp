@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "SpriteCodex.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -118,6 +119,10 @@ void Game::ComposeFrame()
 	{
 		ball.Draw(gfx);
 		pad.Draw(gfx);
+	}
+	else
+	{
+		SpriteCodex::DrawGameOver(Graphics::ScreenWidth/2-50, Graphics::ScreenHeight/2-35, gfx);
 	}
 	
 	for (const Brick& b : bricks)
